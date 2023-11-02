@@ -19,8 +19,8 @@ kubectl rollout status deployment myapp
 kubectl rollout undo deployment myapp
 kubectl describe pod myapp-8588f5656d-bdklz
 kubectl delete deployment myapp
-kubectl create ns
 kubectl create ns argocd
+kubectl get ns
 kubectl get pods -n argocd
 kubectl get svc -n argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
@@ -30,4 +30,3 @@ kubectl cordon <node_name>
 kubectl uncordon <node_name>
 kubectl taint
 kubectl logs <pod_name>
-kubectl get ns
