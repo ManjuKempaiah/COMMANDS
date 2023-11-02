@@ -1,0 +1,33 @@
+kubectl run myapp --image=nginx --port=80
+kubectl run nodeapp --image=manjukempaiah/node-web-app --port=8080
+kubectl expose pods/myapp --type="NodePort" --port 8080
+kubectl get nodes
+kubectl get pods
+kubectl get svc
+kubectl get rs
+kubectl get deployment
+kubectl delete pods
+kubectl delete svc
+kubectl delete rs
+kubectl delete deployment
+kubectl get pods -o wide
+kubectl describe svc myapp
+kubectl delete pods myapp nodeapp
+kubectl create -f pods.yml
+kubectl apply -f nginxsvc.yml
+kubectl rollout status deployment myapp
+kubectl rollout undo deployment myapp
+kubectl describe pod myapp-8588f5656d-bdklz
+kubectl delete deployment myapp
+kubectl create ns
+kubectl create ns argocd
+kubectl get pods -n argocd
+kubectl get svc -n argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl edit svc/argocd-server -n argocd
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+kubectl cordon <node_name>
+kubectl uncordon <node_name>
+kubectl taint
+kubectl logs <pod_name>
+kubectl get ns
