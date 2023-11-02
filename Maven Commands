@@ -1,0 +1,74 @@
+ 1001  mvn archetype:generate   -DgroupId=in.javahome   -DartifactId=chatsem    -DarchetypeArtifactId=maven-archetype-webapp    -DinteractiveMode=false
+ 1002  cd chatsem
+ 1003  git init
+ 1004  git status
+ 1005  git add *
+ 1006  git commit -m 'create sem'
+ 1007  git branch
+ 1008  git branch -m main
+
+* Create new repository and copy the remote origin
+
+ 1011  git remote add origin https://github.com/ManjuKempaiah/chatsem.git
+ 1012  git push origin main
+ 
+* RUN mvn package
+
+ 1014  mvn package
+
+* It fails then edit in pom.xml 
+
+ 1015  vi pom.xml
+
+  <plugins>
+		  <plugin>
+    			<groupId>org.apache.maven.plugins</groupId>
+    			<artifactId>maven-war-plugin</artifactId>
+    			<version>3.3.1</version>
+		 </plugin>
+:wq
+
+ 1016  mvn package
+ 1017  ls
+ 1018  ls target
+ 1019  git status
+ 1020  git add pom.xml
+ 1021  git status
+ 1022  vi .gitignore
+ 1023  git add *
+ 1024  git status
+ 1025  git add .gitignore
+ 1026  git status
+ 1027  git commit -m 'mojo error'
+ 1028  git push origin main
+ 1029  mvn package
+
+ Adding Library
+
+ <dependency>
+    <groupId>com.itextpdf</groupId>
+    <artifactId>itextpdf</artifactId>
+    <version>5.5.13.2</version>
+</dependency>
+
+ 1030  git pull origin main
+ 1031  mvn package
+ 1032  cd ~/.m2/repository
+ 1033  ls
+ 1034  ls junit/junit/3.8.1/
+ 1035  ls
+ 1036  ls com
+ 1037  ls com/itextpdf/itextpdf/5.5.13.2/
+ 1038  cd
+ 1039  rm -r .m2/repository
+ 
+ 1041  cd chatsem
+ 1042  mvn package
+ 1043  mvn validate
+ 1044  mvn compile
+ 1045  mvn package
+ 1046  mvn test
+ 1047  mvn install
+ 1048  mvn package -DskipTests=true
+ 1049  mvn clean package
+ 1050  history
