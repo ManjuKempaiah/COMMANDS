@@ -1,0 +1,11 @@
+    1  cd /opt/
+    2  sudo yum list | grep java-17
+    3  sudo yum install -y java-17-amazon-corretto.x86_64
+    4  sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.82/bin/apache-tomcat-9.0.82.tar.gz
+    5  ls
+    6  sudo tar xf apache-tomcat-9.0.82.tar.gz
+    8  sudo rm -f apache-tomcat-9.0.82.tar.gz
+   10  ls -ltr
+   11  sudo mv apache-tomcat-9.0.82 tomcat9
+   13  sudo chown -R ec2-user:ec2-user tomcat9/
+   15  /opt/tomcat9/bin/startup.sh
