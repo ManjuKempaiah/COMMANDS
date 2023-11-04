@@ -1,3 +1,5 @@
+ sudo yum install maven -y
+ sudo yum install git -y
  1001  mvn archetype:generate   -DgroupId=in.javahome   -DartifactId=chatsem    -DarchetypeArtifactId=maven-archetype-webapp    -DinteractiveMode=false
  1002  cd chatsem
  1003  git init
