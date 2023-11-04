@@ -1,0 +1,3 @@
+sudo su
+su - ec2-user
+cd ~
