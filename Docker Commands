@@ -1,0 +1,55 @@
+sudo yum install docker -y
+sudo usermod -a -G docker ec2-user
+docker -v
+sudo vi Dockerfile
+docker build -t manjukempaiah/pyapp:0.0.1 .
+docker run -d -p 9000:80 manjukempaiah/pyapp:0.0.1
+docker ps
+docker ps -a
+docker rm <containe_id>
+docker rm -f $(docker ps -aq)
+docker images
+docker rmi <image_id>
+docker rmi -f $(docker images -q)
+docker build -t manjukempaiah/tomcat:0.0.1 .
+docker run -it manjukempaiah/tomcat:0.0.1
+docker run -it manjukempaiah/tomcat:0.0.1 echo "ManjuKempaiah"
+docker run -it manjukempaiah/tomcat:0.0.1 facebook.com
+docker build -t manjukempaiah/tomcat:0.0.1 . --build-arg JAVA_PKG=openjdk8
+docker run -it -e CONFIG_FILE="/app/prod.config" manjukempaiah/tomcat:0.0.1
+printenv
+exit
+docker ps --filter="status=exited" -q
+docker rm $(docker ps --filter="status=exited" -q)
+docker rm -f $(docker ps --filter="status=exited" -q)
+docker run -itd --name=one alpine 
+docker run -itd --name=two alpine 
+docker ps
+docker inspect <container_id>
+docker exec -it <container_id> bash or sh
+docker network list
+docker network inspect bridge
+docker network create --driver=bridge manju_jhc
+docker run -itd --name=one --network=manju_jhc alpine
+docker run -itd --name=two --network=manju_jhc alpine
+docker image prune -f
+docker system prune -f
+docker-compose up -d 
+docker-compose ps
+docker logs <container_id>
+docker stats
+docker info
+docker pull <image_name>
+docker login -u
+docker push manjukempaiah/tomcat:0.0.1
+
+
+
+  158   curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose $ chmod +x /usr/local/bin/docker-compose
+  159  docker-compose --version
+  161  curl -SL https://github.com/docker/compose/releases/download/v2.20.3/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+  162  sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+  163  docker-compose --version
+  164  sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  165  sudo chmod +x /usr/local/bin/docker-compose
+  166  docker-compose --version
