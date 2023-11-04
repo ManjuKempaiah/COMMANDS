@@ -3,6 +3,7 @@
        git config --global user.name "user_name"
        git config --global user.email "user_email"
        git branch -m main
+       mvn package -Dskiptests=true
  1001  mvn archetype:generate   -DgroupId=in.javahome   -DartifactId=chatsem    -DarchetypeArtifactId=maven-archetype-webapp    -DinteractiveMode=false
  1002  cd chatsem
  1003  git init
