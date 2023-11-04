@@ -44,3 +44,4 @@
   625  git branch -l
        rm -r .git
        git update-ref -d HEAD
+       git branch --contains <commit_hash>
