@@ -42,3 +42,5 @@
   623  git cherry-pick 40baed2
   624  git branch -r
   625  git branch -l
+       rm -r .git
+       git update-ref -d HEAD
