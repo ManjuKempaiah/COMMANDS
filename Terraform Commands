@@ -9,7 +9,6 @@ terraform apply -auto-approve
 terraform destroy -auto-approve --target=aws_instance.main
 terraform apply -auto-approve --target=aws_instance.main
 terraform taint aws_instance.main
-terraform state list
 terraform import aws_subnet.main2 subnet-072fa57f72fce9737
 doskey /history
 terraform destroy -auto-approve
@@ -21,3 +20,5 @@ terraform workspace show
 terraform workspace select <workspace_name>
 terraform workspace new <workspace_name>
 terraform workspace delete <workspace_name>
+terrafrom state list (mv,pull,push,replace provider,rm,show)
+
