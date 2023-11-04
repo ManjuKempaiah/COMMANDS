@@ -45,3 +45,6 @@
        rm -r .git
        git update-ref -d HEAD
        git branch --contains <commit_hash>
+       git config --global user.name "user_name"
+       git config --global user.email "user_email"
+       git branch -m main
