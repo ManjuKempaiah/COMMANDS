@@ -42,7 +42,8 @@ docker info
 docker pull <image_name>
 docker login -u
 docker push manjukempaiah/tomcat:0.0.1
-
+docker system df
+docker top
 
 
   158   curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose $ chmod +x /usr/local/bin/docker-compose
