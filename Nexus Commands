@@ -1,0 +1,19 @@
+    1  cd /opt/
+    2  sudo yum list | grep java-1.8
+    3  sudo yum install java-1.8.0-amazon-corretto.x86_64 -y
+    4  sudo wget https://download.sonatype.com/nexus/3/nexus-3.61.0-02-unix.tar.gz
+    5  ls
+    6  sudo tar xf nexus-3.61.0-02-unix.tar.gz
+    7  ls
+    8  sudo rm -f nexus-3.61.0-02-unix.tar.gz
+    9  ls
+   10  sudo chown -R ec2-user:ec2-user nexus-3.61.0-02 sonatype-work/
+   11  ls -ltr
+   12  cd nexus-3.61.0-02/bin/
+   13  ls
+   14  cd
+   15  cd /opt/
+   16  sudo vi nexus-3.61.0-02/bin/nexus.rc
+   17  /opt/nexus-3.61.0-02/bin/nexus start
+   18  /opt/nexus-3.61.0-02/bin/nexus status
+   19  cat /opt/sonatype-work/nexus3/admin.password
