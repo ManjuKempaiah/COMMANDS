@@ -1,0 +1,26 @@
+    1  sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+    2  sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+    3  sudo yum list | grep java-11
+    4  sudo yum install -y java-11-amazon-corretto-devel.x86_64
+    5  sudo yum install jenkins -y
+    6  sudo systemctl status jenkins
+    7  sudo systemctl start jenkins
+    8  sudo systemctl status jenkins
+    9  sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+   10  sudo systemctl status jenkins
+   11  sudo systemctl enable jenkins
+   12  sudo yum install git -y
+   13  sudo yum install maven -y
+   14  sudo yum install docker -y
+   15  sudo systemctl start docker
+   16  sudo systemctl status docker
+   17  sudo systemctl enable docker
+   18  sudo docker info
+   19  sudo usermod -a -G docker jenkins
+   20  sudo systemctl restart jenkins
+   21  docker -v
+
+
+
+
+
