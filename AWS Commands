@@ -1,0 +1,89 @@
+lsblk
+sudo mkfs.ext4 /dev/nvme1n1
+sudo mkdir /myvol
+sudo mount /dev/nvme1n1 /myvol/
+sudo blkid /dev/nvme1n1
+sudo vi /etc/fstab
+UUID=05e29c34-475e-4293-9ba2-8c28d57c037d /myvol ext4 defaults,nofail 0 2
+sudo resize2fs /dev/nvme1n1
+df -h
+du -sh
+ssh -i ~/Downloads/loke.pem ec2-user@16.171.225.190
+sudo vi nat.pem
+sudo chown 400 nat.pem
+sudo ssh -i nat.pem ec2-user@10.0.0.146
+ping google.com
+ping facebook.com
+
+sudo yum install httpd -y
+sudo systemctl start httpd
+sudo systemctl enable httpd
+sudo systemctl status httpd
+
+sudo yum remove httpd -y
+java -version
+
+sudo vi /var/www/html/index.html
+<h2 style="color:blue"> BLUE DEPLOYMENT </h2>
+cat /var/www/html/index.html
+
+sudo mkdir /var/www/html/apptwo
+sudo vi /var/www/html/apptwo/index.html
+cat /var/www/html/apptwo/index.html
+<h2 style="color:green"> GREEN DEPLOYMENT </h2>
+
+/index.html
+/apptwo/index.html
+path
+/apptwo*
+
+aws configure
+aws sts get-caller-identity
+aws s3 ls (to list buckets)
+aws s3 cp source/file s3://bucketname
+
+aws ec2 start-instances --instance-ids i-0997df15b5f538d3e i-06ea3eba9bcb3731e
+aws ec2 stop-instances --instance-ids i-0997df15b5f538d3e i-06ea3eba9bcb3731e
+aws ec2 reboot-instances --instance-ids i-0013a45a52466776d
+aws ec2 terminate-instances --instance-ids i-0013a45a52466776d
+
+partition key = LockID
+
+cd /mnt/efs/fs1
+sudo vi manju.txt
+ls
+
+#!/bin/bash
+yum install httpd -y
+systemctl start httpd
+systemctl enable httpd 
+echo "<h2 style="color:red">" USER DATA > /var/www/html/index.html
+
+aws ecr create-repository --repository-name my-repo  Amazon Elastic Container Service
+
+
+# free - The free command in Linux is used to display information about the system's memory usage.
+  - it provides a summary of the total, used, and free memory in the system
+
+$ free
+              total        used        free      shared  buff/cache   available
+Mem:        4042988     1285320     1693824       85552     1069844     2561408
+Swap:       4194300       36864     4157436
+
+# top command in the terminal, it displays a continuously updated list of running processes along with information about resource utilization.
+
+# df -h
+  df: Stands for disk free. It reports file system disk space usage.
+  -h: Human-readable. Print sizes in a human-readable format (e.g., 1K, 234M, 2G).
+  When you run df -h, it displays information about each file system,
+
+# du -sh
+ du: Stands for disk usage. It is used to estimate file space usage.
+ -s: Summarize the space used by each specified file or directory.
+ -h: Human-readable. Print sizes in a human-readable format (e.g., 1K, 234M, 2G).
+
+
+
+
+
+
