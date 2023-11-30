@@ -1,0 +1,20 @@
+    1  cd /opt/
+    2  sudo wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-10.3.0.82913.zip?_gl=1*1jz2a7n*_gcl_au*MTc4ODg3NjUwMy4xNzAxMzQ4NTA0*_ga*MzUzODEwNjkwLjE2ODk2OTUyNTU.*_ga_9JZ0GZ5TC6*MTcwMTM1ODQ3MS44LjEuMTcwMTM1ODUwMS4zMC4wLjA.
+    3  ls 
+    4  sudo unzip sonarqube-10.3.0.82913.zip?_gl=1*1jz2a7n*_gcl_au*MTc4ODg3NjUwMy4xNzAxMzQ4NTA0*_ga*MzUzODEwNjkwLjE2ODk2OTUyNTU.*_ga_9JZ0GZ5TC6*MTcwMTM1ODQ3MS44LjEuMTcwMTM1ODUwMS4zMC4wLjA.
+    5  ls -ltr
+    6  sudo rm -rf sonarqube-10.3.0.82913.zip?_gl=1*1jz2a7n*_gcl_au*MTc4ODg3NjUwMy4xNzAxMzQ4NTA0*_ga*MzUzODEwNjkwLjE2ODk2OTUyNTU.*_ga_9JZ0GZ5TC6*MTcwMTM1ODQ3MS44LjEuMTcwMTM1ODUwMS4zMC4wLjA.
+    7  ls -ltr
+    8  sudo mv sonarqube-10.3.0.82913 sonar10
+    9  ls
+   10  sudo chown -R ec2-user:ec2-user sonar10/
+   11  ls -ltr
+   12  cd sonar10
+   13  ls
+   14  cd conf
+   15  ls
+   16  cd ../..
+   17  sudo yum list | grep java-17
+   18  sudo yum install -y java-17-amazon-corretto.x86_64
+   20  /opt/sonar10/bin/linux-x86-64/sonar.sh start
+   21  /opt/sonar10/bin/linux-x86-64/sonar.sh status
