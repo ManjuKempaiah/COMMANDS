@@ -17,3 +17,9 @@
    17  /opt/nexus-3.61.0-02/bin/nexus start
    18  /opt/nexus-3.61.0-02/bin/nexus status
    19  cat /opt/sonatype-work/nexus3/admin.password
+   20  publicip:8081
+   21  type:war
+   22  classifier:none(empty)
+   23  target/chatsimla.war
+   24  Pipeline Utility Steps plugin
+   25  Nexus Artifact Uploader
