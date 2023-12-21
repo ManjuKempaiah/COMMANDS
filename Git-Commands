@@ -48,3 +48,5 @@
        git config --global user.name "user_name"
        git config --global user.email "user_email"
        git branch -m main
+       git fetch --all
+
