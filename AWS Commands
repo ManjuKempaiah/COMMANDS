@@ -57,7 +57,7 @@ ls
 yum install httpd -y
 systemctl start httpd
 systemctl enable httpd 
-echo "<h2 style="color:red">" USER DATA > /var/www/html/index.html
+echo "<h2 style="color:red"> USER DATA </h2>" > /var/www/html/index.html
 
 aws ecr create-repository --repository-name my-repo  Amazon Elastic Container Service
 
