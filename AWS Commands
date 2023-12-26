@@ -41,6 +41,7 @@ aws configure
 aws sts get-caller-identity
 aws s3 ls (to list buckets)
 aws s3 cp source/file s3://bucketname
+aws s3 ls s3://bucketname
 
 aws ec2 start-instances --instance-ids i-0997df15b5f538d3e i-06ea3eba9bcb3731e
 aws ec2 stop-instances --instance-ids i-0997df15b5f538d3e i-06ea3eba9bcb3731e
