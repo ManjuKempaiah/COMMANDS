@@ -36,3 +36,6 @@ kubectl cordon <node_name>
 kubectl uncordon <node_name>
 kubectl taint
 kubectl logs <pod_name>
+
+kubectl exec -it myapp2 -- /bin/sh
+kubectl describe pod nginx-p7dwj -n default | grep "Restart Count"
