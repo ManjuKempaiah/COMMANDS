@@ -37,5 +37,10 @@ kubectl uncordon <node_name>
 kubectl taint
 kubectl logs <pod_name>
 
-kubectl exec -it myapp2 -- /bin/sh
+kubectl exec -it myapp2 -- /bin/bash
+kubectl exec -it <pod_name> -- /bin/bash
 kubectl describe pod nginx-p7dwj -n default | grep "Restart Count"
+kubectl describe pod <pod_name> -n namespace | grep "Restart Count"
+kubectl get pods --field-selector=status.phase=Failed
+kubectl get pods -A | grep "0/"
+kubectl rollout restart deployment <deployment_name> -n <namespace>
