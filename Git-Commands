@@ -49,4 +49,6 @@
        git config --global user.email "user_email"
        git branch -m main
        git fetch --all
+       git branch <branch_name> commitid
+       git rebase -i HEAD~n
 
