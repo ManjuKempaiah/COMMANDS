@@ -44,3 +44,5 @@ kubectl describe pod <pod_name> -n namespace | grep "Restart Count"
 kubectl get pods --field-selector=status.phase=Failed
 kubectl get pods -A | grep "0/"
 kubectl rollout restart deployment <deployment_name> -n <namespace>
+Kubectl logs <Pod_name> -c <conatiner_name>
+kubectl label nodes <node_name> memoryOptimised=yes
