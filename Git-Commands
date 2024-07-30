@@ -51,4 +51,6 @@
        git fetch --all
        git branch <branch_name> commitid
        git rebase -i HEAD~n
+       git log --since=10days
+       git log --since=2hours
 
