@@ -67,5 +67,30 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 docker-compose version
 
+--------------------------------------------------------------------------------------------
+FROM        -- Specifies the base image for the docker image
+WORKDIR     -- Sets the Working Directory inside the docker image
+RUN         -- RUN is the docker build time instruction
+CMD         -- CMD is the docker run time instruction
+COPY        -- COPY copies files and folders from host machine to image
+ADD         -- ADD copies file and folders from host machine to image
+               ADD have an extra capability, It Downloads the file from URL
+               And also it auto extract the compressed file
+EXPOSE      -- Exposes port to the host machine
+CMD         -- CMD can be Overridden at run time
+ENTRYPOINT  -- ENTRYPOINT cannot be overridden at run, it is getting appended
+               CMD and ENTRYPOINT cab be used together
+ARG         -- ARG is the docker build time Argument
+ENV         -- ENV is the docker run time Argument
+LABEL       -- To add Metadata
+USER        -- To run application using specific user
+HEALTHCHECKS-- To check the health of the application
+. Indicates -- Current Directory as build context
+-d          -- Detached Mode(in the background)
+-it         -- Interactive Terminal(in the foreground)
+-itd        -- Interactive Terminal Detached Mode
+
+
+
 
 
