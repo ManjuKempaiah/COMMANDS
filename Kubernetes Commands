@@ -52,3 +52,4 @@ kubectl rollout status deployment/your-deployment-name -n your-namespace
 kubectl rollout history deployment/your-deployment-name -n your-namespace
 kubectl rollout undo deployment/your-deployment-name -n your-namespace
 kubectl describe deployment your-deployment-name -n your-namespace
+kubectl rollout undo deployment/your-deployment-name -n your-namespace --to-revision=n
