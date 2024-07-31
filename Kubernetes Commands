@@ -46,3 +46,9 @@ kubectl get pods -A | grep "0/"
 kubectl rollout restart deployment <deployment_name> -n <namespace>
 Kubectl logs <Pod_name> -c <conatiner_name>
 kubectl label nodes <node_name> memoryOptimised=yes
+
+kubectl rollout restart deployment <deployment_name> -n <namespace>
+kubectl rollout status deployment/your-deployment-name -n your-namespace
+kubectl rollout history deployment/your-deployment-name -n your-namespace
+kubectl rollout undo deployment/your-deployment-name -n your-namespace
+kubectl describe deployment your-deployment-name -n your-namespace
