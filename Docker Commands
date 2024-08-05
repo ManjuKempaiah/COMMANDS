@@ -90,6 +90,52 @@ HEALTHCHECKS-- To check the health of the application
 -it         -- Interactive Terminal(in the foreground)
 -itd        -- Interactive Terminal Detached Mode
 
+-----------------------------------------------------------------------------------------------------------
+docker ps
+docker ps -a
+docker rm contianer_id
+docker rm -f container_id
+docker rm -f $(docker ps -aq)
+docker ps --filter="status=exited" -q
+docker ps -f="status=exited" -q
+docker ps -f "status=exited" -q
+docker rm -f $(docker ps --filter="status=exited" -q)
+
+docker images
+docker rmi -image_id
+docker rmi -f image_id
+docker rmi -f $(docker images -q)
+docker images --filter="dangling=true" -q
+docker images -f="dangling=true" -q
+dcoker images -f "dangling=true" -q
+docker rmi -f $(docker images --filter="dangling=true" -q)
+
+docker logs container_id
+docker stats
+docker exec -it container_id bash
+docker inspect conatiner_id
+docker-compose up -d
+docker-compose ps
+docker network create --driver=bridge network_name
+docker history image_id
+
+docker image prune -f
+docker system prune -f
+
+docker volume ls
+docker volume create volume_name
+docker volume inspect volume_name
+
+docker build -t manjukempaiah/<image_name>:<tag> .
+docker build -t username/<image_name>:<tag> . 
+docker build -t <nexus-repo-url>/<image_name>:<tag> .
+
+docker run -d -p <hostport>:<conatinerport> --name conatiner_name <image_name>:<tag>
+
+docker build -t manjukempaiah/<image_name>:<tag> . --build-arg JAVA_PKG=openjdk11
+docker run -it -e CONFIG_FILE="/app/prod.config" manjukempaiah/<iamge_name>:<tag>
+docker run -it --env-file ./manju.env manjukempaiah/<image_name>:<tag>
+
 
 
 
