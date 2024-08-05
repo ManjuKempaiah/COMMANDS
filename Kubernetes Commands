@@ -47,9 +47,50 @@ kubectl rollout restart deployment <deployment_name> -n <namespace>
 Kubectl logs <Pod_name> -c <conatiner_name>
 kubectl label nodes <node_name> memoryOptimised=yes
 
-kubectl rollout restart deployment <deployment_name> -n <namespace>
+---------------------------------------------------------------------------------------------------------------
+
+eksctl create cluster --name=jhc-aug-dev
+eksctl delete cluster --name=jhc-aug-dev 
+
+
+kubectl create -f pods.yml
+kubectl apply -f pods.yml
+kubectl delete -f pods.yml
+
+kubectl logs <pod_name>
+kubectl logs <pod_name> -c conatiner_name
+kubectl exec -it <pod_name> -- /bin/bash
+kubectl get pods -o wide
+
+
+kubectl describe pod <pod_name>
+kubectl describe pod <pod_name> -c container_name
+kubectl describe pod <pod_name> -n namespace | grep "Restart Count"
+
+
+To find all pods across all namespaces that are not ready
+kubectl get pods -A | grep "0/"
+
+To find pods that are not ready
+kubectl get pods | grep "0/"
+
+To find all failed pods in the current namespace,
+kubectl get pods --field-selector=status.phase=Failed
+
+To find failed pods across all namespaces, add the -A flag:
+kubectl get pods -A --field-selector=status.phase=Failed
+
+
+kubectl rollout status deployment deployment_name -n namespace
+kubectl rollout undo deployment deployment_name -n namespace
+kubectl rollout restart deployment deployment_name -n namespace
+
 kubectl rollout status deployment/your-deployment-name -n your-namespace
 kubectl rollout history deployment/your-deployment-name -n your-namespace
 kubectl rollout undo deployment/your-deployment-name -n your-namespace
 kubectl describe deployment your-deployment-name -n your-namespace
 kubectl rollout undo deployment/your-deployment-name -n your-namespace --to-revision=n
+
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl edit svc/argocd-server -n argocd
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
