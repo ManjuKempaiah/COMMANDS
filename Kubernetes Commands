@@ -91,6 +91,8 @@ kubectl rollout undo deployment/your-deployment-name -n your-namespace
 kubectl describe deployment your-deployment-name -n your-namespace
 kubectl rollout undo deployment/your-deployment-name -n your-namespace --to-revision=n
 
+kubectl scale deployment <deployment_name> -n <namespace> --replicas=3
+
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 kubectl edit svc/argocd-server -n argocd
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
