@@ -22,3 +22,21 @@ terraform workspace new <workspace_name>
 terraform workspace delete <workspace_name>
 terrafrom state list (mv,pull,push,replace provider,rm,show)
 
+terraform state pull
+
+The terraform state pull command is used to download the current state file from the remote backend (such as an S3 bucket) and display it in your terminal
+
+terraform state pull > backup.tfstate
+
+This command saves the state file as backup.tfstate in your local directory.
+
+-------------------------------------------------------------------------------
+
+The terraform state push command is used to manually upload a Terraform state file to a remote backend, replacing the current state file stored there
+
+terraform state push <path_to_state_file>
+
+terraform state push backup.tfstate
+
+----------------------------------------------------------------------------------
+
