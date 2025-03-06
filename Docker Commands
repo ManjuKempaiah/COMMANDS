@@ -100,6 +100,7 @@ docker ps --filter="status=exited" -q
 docker ps -f="status=exited" -q
 docker ps -f "status=exited" -q
 docker rm -f $(docker ps --filter="status=exited" -q)
+docker rm -f $(docker ps --filter="status=running" -q)
 
 docker images
 docker rmi -image_id
@@ -109,6 +110,7 @@ docker images --filter="dangling=true" -q
 docker images -f="dangling=true" -q
 dcoker images -f "dangling=true" -q
 docker rmi -f $(docker images --filter="dangling=true" -q)
+docker rmi -f $(docker images --filter="dangling=false" -q)
 
 docker logs container_id
 docker stats
