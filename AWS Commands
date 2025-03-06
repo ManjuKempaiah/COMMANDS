@@ -62,26 +62,64 @@ echo "<h2 style="color:red"> USER DATA </h2>" > /var/www/html/index.html
 
 aws ecr create-repository --repository-name my-repo  Amazon Elastic Container Service
 
+sudo vi deployment.yml
+esc Shit+: wq
+10 dd to delete lines in the file
+cat deployment.yml To show content in the file
 
-# free - The free command in Linux is used to display information about the system's memory usage.
-  - it provides a summary of the total, used, and free memory in the system
+Command Description
+:w  Save the file (write changes)
+:q  Quit (only if no changes were made)
+:wq or ZZ Save and quit
+:q! Quit without saving
+:w filename Save as a new file
+:sav filename Save as a new file but keep editing
+:e filename Open a new file
+:r filename Read a file into the current one
+:! command  Run a shell command (e.g., :!ls to list files)
 
-$ free
-              total        used        free      shared  buff/cache   available
-Mem:        4042988     1285320     1693824       85552     1069844     2561408
-Swap:       4194300       36864     4157436
+Command Action
+j Move down one line
+k Move up one line
+↓ (Down Arrow)  Move down one line
+↑ (Up Arrow)  Move up one line
+Jump to Specific Lines
+Command Action
+gg  Go to the first line of the file
+G Go to the last line of the file
+nG or :n  Go to line n (e.g., 10G or :10 moves to line 10)
+Ctrl + d  Move half-page down
+Ctrl + u  Move half-page up
+Ctrl + f  Move full-page down
+Ctrl + b  Move full-page up
 
-# top command in the terminal, it displays a continuously updated list of running processes along with information about resource utilization.
+dd  Delete the current line
+D Delete from cursor to end of line
+d$  Delete from cursor to end of line
+d0  Delete from cursor to beginning of line
 
-# df -h
-  df: Stands for disk free. It reports file system disk space usage.
-  -h: Human-readable. Print sizes in a human-readable format (e.g., 1K, 234M, 2G).
-  When you run df -h, it displays information about each file system,
+Delete Multiple Lines
+Command Action
+ndd Delete n lines (e.g., 5dd deletes 5 lines)
+dG  Delete from current line to end of file
+dgg Delete from current line to beginning of file
+:m,nd Delete lines from m to n (e.g., :3,7d deletes lines 3 to 7)
 
-# du -sh
- du: Stands for disk usage. It is used to estimate file space usage.
- -s: Summarize the space used by each specified file or directory.
- -h: Human-readable. Print sizes in a human-readable format (e.g., 1K, 234M, 2G).
+------------------------------------------------------------
+10.0.0.0/24
+10.0.0.0/25    Subnet1(Public Subnet) 128ips
+10.0.0.128/25  Subnet2(Private Subnet) 128 ips Nat Instance and Nategateway
+
+10.0.0.0/24   Create one Vpc one Public Subnet
+10.0.0.0/24   Public Subnet
+
+10.10.0.0/24  Create one more Vpc with one Private Subnet
+10.10.0.0/24  Private Subnet
+
+--------------------------------------------------------------------
+
+
+
 
 
 
