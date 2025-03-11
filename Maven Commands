@@ -3,7 +3,7 @@
        git config --global user.name "user_name"
        git config --global user.email "user_email"
        git branch -m main
-       mvn package -Dskiptests=true
+
  1001  mvn archetype:generate   -DgroupId=in.javahome   -DartifactId=chatsem    -DarchetypeArtifactId=maven-archetype-webapp    -DinteractiveMode=false
  1002  cd chatsem
  1003  git init
@@ -40,7 +40,8 @@
  1019  git status
  1020  git add pom.xml
  1021  git status
- 1022  vi .gitignore
+ 1022  sud vi .gitignore
+ 1022  target*
  1023  git add *
  1024  git status
  1025  git add .gitignore
@@ -50,6 +51,9 @@
  1029  mvn package
 
  Adding Library
+
+ In pom.xml file in 17 line(Below the 16th line)
+ 23 rd line will be empty
 
  <dependency>
     <groupId>com.itextpdf</groupId>
