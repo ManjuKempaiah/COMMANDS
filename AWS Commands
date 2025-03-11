@@ -67,44 +67,6 @@ esc Shit+: wq
 10 dd to delete lines in the file
 cat deployment.yml To show content in the file
 
-Command Description
-:w  Save the file (write changes)
-:q  Quit (only if no changes were made)
-:wq or ZZ Save and quit
-:q! Quit without saving
-:w filename Save as a new file
-:sav filename Save as a new file but keep editing
-:e filename Open a new file
-:r filename Read a file into the current one
-:! command  Run a shell command (e.g., :!ls to list files)
-
-Command Action
-j Move down one line
-k Move up one line
-↓ (Down Arrow)  Move down one line
-↑ (Up Arrow)  Move up one line
-Jump to Specific Lines
-Command Action
-gg  Go to the first line of the file
-G Go to the last line of the file
-nG or :n  Go to line n (e.g., 10G or :10 moves to line 10)
-Ctrl + d  Move half-page down
-Ctrl + u  Move half-page up
-Ctrl + f  Move full-page down
-Ctrl + b  Move full-page up
-
-dd  Delete the current line
-D Delete from cursor to end of line
-d$  Delete from cursor to end of line
-d0  Delete from cursor to beginning of line
-
-Delete Multiple Lines
-Command Action
-ndd Delete n lines (e.g., 5dd deletes 5 lines)
-dG  Delete from current line to end of file
-dgg Delete from current line to beginning of file
-:m,nd Delete lines from m to n (e.g., :3,7d deletes lines 3 to 7)
-
 ------------------------------------------------------------
 10.0.0.0/24
 10.0.0.0/25    Subnet1(Public Subnet) 128ips
