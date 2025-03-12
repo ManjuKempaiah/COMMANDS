@@ -9,23 +9,25 @@ docker build -t manjukempaiah/pyapp:0.0.1 .
 docker run -d -p 9000:80 manjukempaiah/pyapp:0.0.1
 docker ps
 docker ps -a
-docker rm <containe_id>
+docker rm <container_id>
+docker rm -f fa45778429ba 8781e76e7063
 docker rm -f $(docker ps -aq)
 docker images
 docker rmi <image_id>
+docker rmi 0fba1fe24980 214674198974 c1aabb73d233
 docker rmi -f $(docker images -q)
 docker build -t manjukempaiah/tomcat:0.0.1 .
 docker run -it manjukempaiah/tomcat:0.0.1
 docker run -it manjukempaiah/tomcat:0.0.1 echo "ManjuKempaiah"
 docker run -it manjukempaiah/tomcat:0.0.1 facebook.com
+CTRL + C stop the ping command
 docker build -t manjukempaiah/tomcat:0.0.1 . --build-arg JAVA_PKG=openjdk8
 docker run -it -e CONFIG_FILE="/app/prod.config" manjukempaiah/tomcat:0.0.1
-docker run -it --env-file ./manju.env manjukempaiah/tomcat:0.0.1
 printenv
 exit
 docker ps --filter="status=exited" -q
-  docker ps -f="status=exited" -q
-  docker ps -f "status=exited" -q
+docker ps -f="status=exited" -q
+docker ps -f "status=exited" -q
 docker rm $(docker ps --filter="status=exited" -q)
 docker rm -f $(docker ps --filter="status=exited" -q)
 docker run -itd --name=one alpine 
@@ -49,15 +51,29 @@ docker pull <image_name>
 docker login -u manjukempaiah
 docker push manjukempaiah/tomcat:0.0.1
 docker system df
-docker top
+docker top container_id
+
+The docker top command is used to display the running processes inside a Docker container.
+
+docker volume ls
+docker volume create jenkins
+docker volume inspect jenkins
+
 docker rm 954b7d953d9c 9ec006c56557
 docker rmi 39e94893115b e4720093a3c1
-
+docker run -it --env-file ./manju.env manjukempaiah/tomcat:0.0.1
 docker images -f "dangling=true"
 docker images -f "dangling=true" -q
 docker images --filter="dangling=true" -q
 docker images -f="dangling=true" -q
 docker rmi -f $(docker images -f "dangling=true" -q)
+----------------------------------------------------------------
+git init
+git clone https://github.com/ManjuKempaiah/docker-repo.git
+cd docker-repo
+ls 
+
+----------------------------------------------------------------
 
 Docker-Compose Installation:
 
@@ -67,7 +83,8 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 docker-compose version
 
---------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------
+
 FROM        -- Specifies the base image for the docker image
 WORKDIR     -- Sets the Working Directory inside the docker image
 RUN         -- RUN is the docker build time instruction
@@ -90,55 +107,149 @@ HEALTHCHECKS-- To check the health of the application
 -it         -- Interactive Terminal(in the foreground)
 -itd        -- Interactive Terminal Detached Mode
 
------------------------------------------------------------------------------------------------------------
-docker ps
+-----------------------------------------------------------------------------
+
+docker logs container_id
+docker stats
+docker exec -it container_id bash
+docker inspect container_id
+docker-compose up -d
+docker network create --driver=bridge networkname
+docker history image_id
+
+docker image prune -f
+docker system prune -f
+
+docker ps 
 docker ps -a
-docker rm contianer_id
+docker rm container_id
 docker rm -f container_id
 docker rm -f $(docker ps -aq)
 docker ps --filter="status=exited" -q
 docker ps -f="status=exited" -q
 docker ps -f "status=exited" -q
 docker rm -f $(docker ps --filter="status=exited" -q)
-docker rm -f $(docker ps --filter="status=running" -q)
 
 docker images
-docker rmi -image_id
-docker rmi -f image_id
+docker rmi imageid
+docker rmi -f imageid
 docker rmi -f $(docker images -q)
 docker images --filter="dangling=true" -q
 docker images -f="dangling=true" -q
-dcoker images -f "dangling=true" -q
+docker images -f "dangling=true" -q
 docker rmi -f $(docker images --filter="dangling=true" -q)
-docker rmi -f $(docker images --filter="dangling=false" -q)
-
-docker logs container_id
-docker stats
-docker exec -it container_id bash
-docker inspect conatiner_id
-docker-compose up -d
-docker-compose ps
-docker network create --driver=bridge network_name
-docker history image_id
-
-docker image prune -f
-docker system prune -f
-
-docker volume ls
-docker volume create volume_name
-docker volume inspect volume_name
 
 docker build -t manjukempaiah/<image_name>:<tag> .
-docker build -t username/<image_name>:<tag> . 
-docker build -t <nexus-repo-url>/<image_name>:<tag> .
+docker run -d -p <host_port>:<container_port> --name container_name <image_name>:<tag>
 
-docker run -d -p <hostport>:<conatinerport> --name conatiner_name <image_name>:<tag>
+docker run -it -e CONFIG_FILE="/app/prod.config" manjukempaiah/tomcat:0.0.1 
+docker run -it --env-file ./manju.env manjukempaiah/tomcat:0.0.1
+docker build -t manjukempaiah/tomcat:0.0.1 . --build-arg JAVA_PKG=openjdk11
 
-docker build -t manjukempaiah/<image_name>:<tag> . --build-arg JAVA_PKG=openjdk11
-docker run -it -e CONFIG_FILE="/app/prod.config" manjukempaiah/<iamge_name>:<tag>
-docker run -it --env-file ./manju.env manjukempaiah/<image_name>:<tag>
+--------------------------------------------------------------------------------
 
+withcredentials: Bind credentials to variables
 
+Username and password(separated)
+Username Varible: user
+Password Variable: pwd
+
+sshagent: SSH Agent
+
+sshagent(['docker-ssh']) {
+    // some block
+}
+
+-o StrictHostKeyChecking=no
+
+sh "" --> Is Very Important to Perform script on remote shell
+
+To Build Docker Image,Push,and RUN we need install docker on jenkins server
+
+sudo yum install docker -y
+sudo sytemctl start docker
+sudo sytemctl status docker
+sudo sytemctl enable docker
+sudo usermod -a -G docker jenkins
+sudo systemctl restart jenkins
+
+Docker public_ip:8080
+
+8080:5000
+hosport containerport
+
+-------------------------------------------------------------------------------
+
+pipeline{
+    agent any
+    stages{
+        stage('Checkout The Code'){
+            steps{
+                git branch:'master', credentialsId:'git-ManjuKempaiah', url:'https://github.com/ManjuKempaiah/python-app'
+            }
+        }
+        stage('Docker Build'){
+            steps{
+                sh 'docker build -t manjukempaiah/pyapp:0.0.1 .'
+            }
+        }
+        stage('Docker Hub Push'){
+            steps{
+               withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'pwd', usernameVariable: 'user')]) {
+             sh "docker login -u ${user} -p ${pwd}"
+             sh "docker push manjukempaiah/pyapp:0.0.1"
+             } 
+            }
+        }
+        stage('Dcoker Dev Deploy'){
+            steps{
+                sshagent(['docker-ssh']) {
+              sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.34.174 docker rm -f pyapp"
+              sh "ssh ec2-user@172.31.34.174 docker run -d -p 8080:5000 --name pyapp manjukempaiah/pyapp:0.0.1"
+             }
+            }
+        }
+    }
+}
+
+-----------------------------------------------------------------------
+
+pipeline{
+    agent any
+    environment{
+        DOCKER_TAG = "0.0.2"
+    }
+    stages{
+        stage('Checkout The Code'){
+            steps{
+                git branch:'master', credentialsId:'git-ManjuKempaiah', url:'https://github.com/ManjuKempaiah/python-app'
+            }
+        }
+        stage('Docker Build'){
+            steps{
+                sh 'docker build -t manjukempaiah/pyapp:${DOCKER_TAG} .'
+            }
+        }
+        stage('Docker Hub Push'){
+            steps{
+               withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'pwd', usernameVariable: 'user')]) {
+             sh "docker login -u ${user} -p ${pwd}"
+             sh "docker push manjukempaiah/pyapp:${DOCKER_TAG}"
+             } 
+            }
+        }
+        stage('Dcoker Dev Deploy'){
+            steps{
+                sshagent(['docker-ssh']) {
+              sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.34.174 docker rm -f pyapp"
+              sh "ssh ec2-user@172.31.34.174 docker run -d -p 8080:5000 --name pyapp manjukempaiah/pyapp:${DOCKER_TAG}"
+             }
+            }
+        }
+    }
+}
+
+----------------------------------------------------------------------
 
 
 
