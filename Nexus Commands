@@ -13,13 +13,123 @@
    13  ls
    14  cd
    15  cd /opt/
+
    16  sudo vi nexus-3.61.0-02/bin/nexus.rc
+       run_as_user="ec2-user" and then save   **
    17  /opt/nexus-3.61.0-02/bin/nexus start
    18  /opt/nexus-3.61.0-02/bin/nexus status
    19  cat /opt/sonatype-work/nexus3/admin.password
-   20  publicip:8081
+
+       click on nexusArtifactUploader:Nexus Artifact Uploader
+
+   20  Nexus Version: Nexus 3
+   20  Protocol: HTTP
+   20  Nexus URL:publicip:8081
+   20  Repository:manju-snapshot
    21  type:war
    22  classifier:none(empty)
-   23  target/chatsimla.war
-   24  Pipeline Utility Steps plugin
-   25  Nexus Artifact Uploader
+   23  File:target/chatsimla.war
+   24  Pipeline Utility Steps We need to Install the pugin
+   25  readMavenPom: Read Maven project file.
+   26  maven2(hosted)
+
+   manju-snapshot
+   1.0-SNAPSHOT           --> Is the Snapshot Version (Work in pogress)
+
+   manju-release
+   1.0(without -SNAPSHOT) ---> Is the Release Version (Work is finished)
+
+   Credential Type: Username With Password
+   username: admin
+   password: your choice
+   description: nexus3
+
+
+   Nexus Policies
+
+   Version Policy
+   Layout Policy
+   Deployment Policy
+   Cleanup Policies
+
+
+--------------------------------------------------------------
+
+pipeline{
+    agent any
+    stages{
+        stage('Checkout The Code'){
+            steps{
+                git branch:'main', credentialsId:'git-ManjuKempaiah', url:'https://github.com/ManjuKempaiah/chatram'
+            }
+        }
+        stage('Maven Build'){
+            steps{
+              sh 'mvn clean package'  
+            }
+        }
+        stage('Nexus Artifact Upload'){
+            steps{
+              nexusArtifactUploader artifacts: [[artifactId: 'chatram', classifier: '', file: 'target/chatram.war', type: 'war']], credentialsId: 'nexus3', groupId: 'in.javahome', nexusUrl: '16.16.184.210:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'manju-release', version: '1.0' 
+            }
+        }
+    }
+}
+
+----------------------------------------------------------------------------------------
+
+pipeline{
+    agent any
+    stages{
+        stage('Checkout The Code'){
+            steps{
+                git branch:'main', credentialsId:'git-ManjuKempaiah', url:'https://github.com/ManjuKempaiah/chatram'
+            }
+        }
+        stage('Maven Build'){
+            steps{
+              sh 'mvn clean package'  
+            }
+        }
+        stage('Nexus Artifact Upload'){
+            steps{
+              nexusArtifactUploader artifacts: [[artifactId: 'chatram', classifier: '', file: 'target/chatram.war', type: 'war']], credentialsId: 'nexus3', groupId: 'in.javahome', nexusUrl: '16.16.184.210:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'manju-snapshot', version: '1.0-SNAPSHOT' 
+            }
+        }
+    }
+}
+
+---------------------------------------------------------------------------------
+pipeline{
+    agent any
+    stages{
+        stage('Checkout The Code'){
+            steps{
+                git branch:'main', credentialsId:'git-ManjuKempaiah', url:'https://github.com/ManjuKempaiah/chatram'
+            }
+        }
+        stage('Maven Build'){
+            steps{
+              sh 'mvn clean package'  
+            }
+        }
+        stage('Nexus Artifact Upload'){
+            steps{
+              script{
+              def pom = readMavenPom file: 'pom.xml'
+              def version = pom.version
+              def repoName = version.endsWith("SNAPSHOT") ? "manju-snapshot" : "manju-release" 
+              nexusArtifactUploader artifacts: [[artifactId: 'chatram', classifier: '', file: 'target/chatram.war', type: 'war']], credentialsId: 'nexus3', 
+              groupId: 'in.javahome', 
+              nexusUrl: '13.51.173.13:8081', 
+              nexusVersion: 'nexus3', 
+              protocol: 'http', 
+              repository: "${repoName}", 
+              version: "${version}"
+              }
+            }
+        }
+    }
+}
+
+-------------------------------------------------------------------
