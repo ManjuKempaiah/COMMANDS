@@ -105,6 +105,7 @@
 ---------------------------------------------------
 
 cherry-pick commit abc123 from origin/feature-branch into local main:
+(Remote branch to local branch)
 
 git fetch origin
 git log <source-branch> --oneline
