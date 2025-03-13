@@ -102,6 +102,45 @@
        git branch -l
        git branch -r
 
+---------------------------------------------------
+
+cherry-pick commit abc123 from origin/feature-branch into local main:
+
+git fetch origin
+git log <source-branch> --oneline
+git checkout main
+git cherry-pick abc123
+
+---------------------------------------------------
+
+To cherry-pick a commit from one local branch to another local branch
+
+git log <source-branch> --oneline
+git checkout main
+git cherry-pick abc123
+
+---------------------------------------------------
+
+If you want to cherry-pick commit abc123 from origin/feature-branch to origin/main:
+(Remot branch to remote branch)
+
+git fetch origin
+git checkout -b local-main origin/main
+git cherry-pick abc123
+git push origin local-main:main
+
+----------------------------------------------------
+
+git reset --soft commit_id --- Remove the commit and keep changes in staging area
+
+git rest commit_id          }
+git reset --mixed commit_id }  Remove the commit and keep changes in working area
+
+git reset --hard commit_id --- Remove the commit and permanently discard changes
+
+------------------------------------------------------
+
+
 
 
 
