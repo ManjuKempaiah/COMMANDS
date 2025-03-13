@@ -9,3 +9,85 @@
    11  sudo mv apache-tomcat-9.0.82 tomcat9
    13  sudo chown -R ec2-user:ec2-user tomcat9/
    15  /opt/tomcat9/bin/startup.sh
+----------------------------------------------------------
+     
+     Parameterised
+     Add Parameter --> string parameter
+     Name:x
+     Default Value: empty
+     Description: enter the value one
+
+     Build steps:
+     execute shell
+     echo $(($x+$y))
+
+     Post-build Actions:
+     Delete workspace when build is done
+     Build other projects
+     Trigger parameterized build on other projects
+     Projects to build: parameter(job Name)
+     Trigger when build is: stable
+     parameters
+     predefined parameters
+     x=100
+     y=200
+-----------------------------------------------------------
+    String Parameter Name: branchName
+    
+    Branch Specifier
+    */$branchName
+
+-----------------------------------------------------------  
+
+   Invoke top-level Maven targets
+   Golas: clean package
+
+   Send files or execute commands over SSH
+   SSH Server
+   Name : tomcat-dev
+   Note: Once we configured Publish over SSH under System configuration --> system
+         tomcat-dev will appear under SSH server
+   
+   18 Source files:target/chatone.war
+   19 Remove prefix: target
+   20 Remote directory: /opt/tomcat9/webapps
+   21 Exec command:/opt/tomcat9/bin/shutdown.sh
+                   /opt/tomcat9/bin/startup.sh
+   22 http://51.20.65.215:8080/chatone/
+------------------------------------------------------------
+   
+   -o StrictHostKeyChecking=no ****
+
+------------------------------------------------------------  
+ Hello World Colour change
+ Create develop branch from main in remote repository
+  500  git init
+  501  git clone https://github.com/ManjuKempaiah/chatram.git
+  502  cd chatram
+  503  code .
+  506  git fetch --all
+  507  git checkout develop
+  509  git branch feature/manju/change-colour
+  510  git checkout feature/manju/change-colour
+       Edit the index.jsp
+  511  git status
+  513  git add *
+  514  git status
+  515  git commit -m 'committing change colour'
+  516  git status
+  517  git push origin feature/manju/change-colour
+
+  and then merge feature branch with develop branch and delte feature branch
+
+  then build the job with develop branch
+
+  51.20.136.42:8080/chatram/ (The Colur will change)
+-----------------------------------------------------------------------------
+   <html>
+<body>
+<h2 style="color: aqua;"> ManjuAmreen </h2>
+</body>
+</html>
+
+------------------------------------------------------------------------------
+
