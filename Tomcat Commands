@@ -57,6 +57,7 @@
 ------------------------------------------------------------
    
    -o StrictHostKeyChecking=no ****
+   prevents SSH from prompting and automatically accepts the host key.
 
 ------------------------------------------------------------  
  Hello World Colour change
