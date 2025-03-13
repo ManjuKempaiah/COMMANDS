@@ -9,6 +9,7 @@ docker build -t manjukempaiah/pyapp:0.0.1 .
 docker run -d -p 9000:80 manjukempaiah/pyapp:0.0.1
 docker ps
 docker ps -a
+docker ps -aq
 docker rm <container_id>
 docker rm -f fa45778429ba 8781e76e7063
 docker rm -f $(docker ps -aq)
@@ -53,11 +54,72 @@ docker push manjukempaiah/tomcat:0.0.1
 docker system df
 docker top container_id
 
+---------------------------------------------------------------------
+
 The docker top command is used to display the running processes inside a Docker container.
 
-docker volume ls
+----------------------------------------------------------------------
+Docker Volumes
+
+docker run -d -p 8080:8080 --name jenkins jenkins/jenkins
+dockerpubic_ip:8080
+docker exec -it 5c29720af9c0 bash
+cat /var/jenkins_home/secrets/initialAdminPassword
+Install jenkins
+docker rm -f 5c29720af9c0
+If remove the container, the data and the jobs are lost
+again install jenkins its again going for installation
+
+So that why we aru using volumes if continer is remove accidentally again we can
+recover the data from volume.While launching continer we need to launch continer with volume.
+
+First create the volume
+
 docker volume create jenkins
 docker volume inspect jenkins
+docker volume rm volume_name
+docker volume ls
+
+docker run -d -p 8080:8080 -p 50000:50000 -v jenkins:/var/jenkins_home --name jenkins jenkins/jenkins
+The jenkins is created with volume jenkins(Here the volume name is jenkins)
+
+cd /var/lib/docker/volumes/jenkins/_data(volume mounted in this path)
+Here the data,logs,jobs,plugins will be stored
+sudo su (Switch to root user)
+
+Now delete the container and run again same conatiner with volume we get all the jobs.
+
+docker run -d -p 8080:8080 -p 50000:50000 -v jenkins:/var/jenkins_home --name jenkins jenkins/jenkins
+
+------------------------------------------------------------------
+Bridge Network:(Default)
+
+Conatiner communicate with each other using ip addresses.
+
+docker network list
+docker run -itd --name=one alpine
+docker run -itd --name=two alpine
+docker ps -a
+docker network inspect bridge
+docker ps -a
+docker exec -it one sh
+ping with two conatiner ip adress
+exit
+
+---------------------------------------------------------------------
+
+Custom Bridge Network:
+
+Conatiner communicate with each other using containers names as DNS names.
+
+docker network create --driver=bridge manju_jhc
+docker run -itd --name=one --network=manju_jhc alpine
+docker run -itd --name=two --network=manju_jhc alpine
+docker exec -it one sh
+ping with two conatiner name
+exit
+
+------------------------------------------------------------------------
 
 docker rm 954b7d953d9c 9ec006c56557
 docker rmi 39e94893115b e4720093a3c1
@@ -161,6 +223,7 @@ sshagent(['docker-ssh']) {
 }
 
 -o StrictHostKeyChecking=no
+prevents SSH from prompting and automatically accepts the host key.
 
 sh "" --> Is Very Important to Perform script on remote shell
 
