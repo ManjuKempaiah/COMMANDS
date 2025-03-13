@@ -1,7 +1,7 @@
     1  sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
     2  sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
-    3  sudo yum list | grep java-11
-    4  sudo yum install -y java-11-amazon-corretto-devel.x86_64
+    3  sudo yum list | grep java-17
+    4  sudo yum  install java-17-amazon-corretto-devel.x86_64 -y
     5  sudo yum install jenkins -y
     6  sudo systemctl status jenkins
     7  sudo systemctl start jenkins
@@ -16,11 +16,93 @@
    16  sudo systemctl status docker
    17  sudo systemctl enable docker
    18  sudo docker info
-   19  sudo usermod -a -G docker jenkins
+   19  sudo usermod -a -G docker jenkins  * To Build docker image
    20  sudo systemctl restart jenkins
    21  docker -v
+   22  feature/*
+   23  http://13.51.172.87:8080/github-webhook/
+   
+------------------------------------------------------------
+
+   git:Git             --->Git Generate Pipeline Script
+   sh:Shell Script     --->Maven Generate Pipeline Script
+   sshagent: SSH Agent --->For Tomcat
+   withCredentials: Bind credentials to variables --->For Nexus
+   readMavenPom: Read a maven project file        --->For Nexus
+
+--------------------------------------------------------------
+   SSH Agent 
+   SonarQube Scanner
+   Nexus Artifact Uploader
+   Publish Over SSH
+   Parameterized Trigger
+   Pipeline Utility Steps
+-------------------------------------------------------------
+
+    1  sudo wget -O /etc/yum.repos.d/jenkins.repo     https://pkg.jenkins.io/redhat-stable/jenkins.repo
+    2  sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+    3  sudo yum upgrade
+    4  sudo yum list | grep java-17
+    5  sudo yum  install java-17-amazon-corretto-devel.x86_64 -y
+    6  sudo yum install jenkins -y
 
 
+    sh "" --> Is Very Important to Perform script on remote shell
 
+------------------------------------------------------------
+   
+   -o StrictHostKeyChecking=no ****
+
+------------------------------------------------------------ 
+
+To Create Shared Library after creating shared repository
+
+ckick on create new file
+ashu.libs/vars/greet.groovy
+def call -- call is the function
+def call(name){} -- name is the argument
+${} -- Interpolation
+${name} -- name is the variable
+commit changes 
+commit
+
+click on add file
+ashu.libs/vars/tomcatDeploy.groovy
+commit changes 
+commit
+
+---------------------------------------------------------------
+Global Trusted Pipeline Libraries
+Name: jhc-libs23
+Default version: main
+
+---------------------------------------------------------------
+
+@Library('jhc-libs23') _  ***
+
+---------------------------------------------------------------
+Muitibranch Pipeline
+
+While multi barnch pipeline Keep jenkins file in all the three barnches main,develop,test
+Edit the jenkins file in develop barnch first
+then merge develop branch with test
+then merge test branch with main
+then configure exclude: feature/*
+Create feature barnch from develop branch
+then renomve exclude: feature/* .
+
+---------------------------------------------------------------
+
+For Jenkins-Slave
+
+sudo mkdir /opt/jenkins
+sudo chown -R ec2-user:ec2-user /opt/jenkins/
+
+sudo yum list | grep java-17
+sudo yum install java-17-amazon-corretto-devel.x86_64 -y
+
+----------------------------------------------------------------
+
+ 
 
 
