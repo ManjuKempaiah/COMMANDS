@@ -2,6 +2,7 @@ ansible webservers -m yum -a 'name=git state=present' --become
 ansible-playbook varibles.yml
 ansible-playbook apache.yml --limit @apache.retry
 ansible localhost -m setup
+setup is the module for gathering facts
 
 ansible-vault encrypt filename
 ansible-vault decrypt filename
