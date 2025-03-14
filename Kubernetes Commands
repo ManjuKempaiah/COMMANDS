@@ -1,41 +1,29 @@
+AWS → IAM → Add User → Assign Administrator Access → Create User
+Open User → security credentials → Access Keys → Generate
+
+Kubectl logs pod_name --- Application Level Information
+kubectl describe pod pod_name --- Cluster Level Information.Inside the cluster what happening
+
+Servivce is used to expose the application to the outside world 
+
+Mibs
+Millicourse
+
+How to check which pods behind the service by using end points
+kubectl get pods -o wide 
+check pod ip address in endpoints by describing service
+
+Cluster Ip: To deploy the DATABASE
+NodePort or LoadBalancer: To Deploy Webapplication
+
+----------------------------------------------------------------------------
+
 aws configure
 aws sts get-caller-identity
 
 eksctl create cluster --name=jhc-aug-dev
+eksctl delete cluster --name=jhc-aug-dev --node=5
 eksctl delete cluster --name=jhc-aug-dev
-
-kubectl run myapp --image=nginx --port=80
-kubectl run nodeapp --image=manjukempaiah/node-web-app --port=8080
-kubectl expose pods/myapp --type="NodePort" --port 8080
-kubectl get nodes
-kubectl get pods
-kubectl get svc
-kubectl get rs
-kubectl get deployment
-kubectl delete pods
-kubectl delete svc
-kubectl delete rs
-kubectl delete deployment
-kubectl get pods -o wide
-kubectl describe svc myapp
-kubectl delete pods myapp nodeapp
-kubectl create -f pods.yml
-kubectl apply -f nginxsvc.yml
-kubectl rollout status deployment myapp
-kubectl rollout undo deployment myapp
-kubectl describe pod myapp-8588f5656d-bdklz
-kubectl delete deployment myapp
-kubectl create ns argocd
-kubectl get ns
-kubectl get pods -n argocd
-kubectl get svc -n argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-kubectl edit svc/argocd-server -n argocd
-kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
-kubectl cordon <node_name>
-kubectl uncordon <node_name>
-kubectl taint
-kubectl logs <pod_name>
 
 kubectl exec -it myapp2 -- /bin/bash
 kubectl exec -it <pod_name> -- /bin/bash
@@ -47,9 +35,48 @@ kubectl rollout restart deployment <deployment_name> -n <namespace>
 Kubectl logs <Pod_name> -c <conatiner_name>
 kubectl label nodes <node_name> memoryOptimised=yes
 
----------------------------------------------------------------------------------------------------------------
+
+kubectl run myapp --image=nginx --port=80
+kubectl run nodeapp --image=manjukempaiah/node-web-app --port=8080
+kubectl expose pods/myapp --type="NodePort" --port 8080
+kubectl get nodes
+kubectl get pods
+kubectl get svc
+kubectl get rs
+kubectl get deployment
+
+kubectl delete pods
+kubectl delete svc
+kubectl delete rs
+kubectl delete deployment
+
+kubectl get pods -o wide
+kubectl describe svc myapp
+kubectl delete pods myapp nodeapp
+kubectl create -f pods.yml
+kubectl apply -f nginxsvc.yml
+kubectl rollout status deployment myapp
+kubectl rollout undo deployment myapp
+kubectl describe pod myapp-8588f5656d-bdklz
+kubectl delete deployment myapp
+
+kubectl create ns
+kubectl create ns argocd
+kubectl get pods -n argocd
+kubectl get svc -n argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl edit svc/argocd-server -n argocd
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+kubectl cordon <node_name>
+kubectl uncordon <node_name>
+kubectl taint
+kubectl logs <pod_name>
+kubectl get ns
+
+----------------------------------------------------------
 
 eksctl create cluster --name=jhc-aug-dev
+eksctl create cluster --name=jhc-aug-dev --node=5
 eksctl delete cluster --name=jhc-aug-dev 
 
 
@@ -60,6 +87,7 @@ kubectl delete -f pods.yml
 kubectl logs <pod_name>
 kubectl logs <pod_name> -c conatiner_name
 kubectl exec -it <pod_name> -- /bin/bash
+kubectl exec -it <pod_name> -c container_name -- /bin/bash
 kubectl get pods -o wide
 
 
@@ -83,16 +111,31 @@ kubectl get pods -A --field-selector=status.phase=Failed
 
 kubectl rollout status deployment deployment_name -n namespace
 kubectl rollout undo deployment deployment_name -n namespace
+kubectl rollout undo deployment deployment_name -n namespace --to-revision=n
 kubectl rollout restart deployment deployment_name -n namespace
+kubectl rollout history deployment deployment_name -n namespace
+kubectl describe deployment deployment_name -n namespace
 
-kubectl rollout status deployment/your-deployment-name -n your-namespace
-kubectl rollout history deployment/your-deployment-name -n your-namespace
-kubectl rollout undo deployment/your-deployment-name -n your-namespace
-kubectl describe deployment your-deployment-name -n your-namespace
-kubectl rollout undo deployment/your-deployment-name -n your-namespace --to-revision=n
 
 kubectl scale deployment <deployment_name> -n <namespace> --replicas=3
+kubectl scale replicaset nginx -n default --replicas=5
 
+kubectl get pods -A | findstr "0/"
+kubectl describe pod nginx-gpql9 -n default | findstr "Restart Count"
+
+kubectl get pods -A | findstr "0/"
+kubectl describe pod nginx-gpql9 -n default | findstr "Restart Count"
+
+-----------------------------------------------------------------------------
+
+kubectl create ns
+kubectl create ns argocd
+kubectl get pods -n argocd
+kubectl get svc -n argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 kubectl edit svc/argocd-server -n argocd
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+
+
+
+
