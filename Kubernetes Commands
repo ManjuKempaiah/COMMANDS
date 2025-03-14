@@ -1,3 +1,11 @@
+In kubernetes resources can be created in two ways
+
+1.	Imperative 
+a.	kubectl run nodeap --image=kammana/nodeapp:v1 --port=8080
+
+2.	Declarative
+a.By using yaml files
+
 AWS → IAM → Add User → Assign Administrator Access → Create User
 Open User → security credentials → Access Keys → Generate
 
