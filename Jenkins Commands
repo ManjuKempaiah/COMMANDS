@@ -103,7 +103,16 @@ sudo yum list | grep java-17
 sudo yum install java-17-amazon-corretto-devel.x86_64 -y
 
 ----------------------------------------------------------------
+3.   WebHook
+ 
+ Go to github repository → Settings → Webhook → Add Webhook
+ URL –> http://<jenkins-public-ip>:8080/github-webhook/
 
+ Content type: applicattion/json
+ 
+ Note: it should be private ip in real time
+
+---------------------------------------------------------------
  
 
 
