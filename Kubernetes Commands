@@ -1,3 +1,6 @@
+Edit the Environment Variables for your account
+path--> Edit --> Paste The Directory Path --> OK --> OK
+
 In kubernetes resources can be created in two ways
 
 1.	Imperative 
