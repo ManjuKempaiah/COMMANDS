@@ -140,7 +140,12 @@ git reset --mixed commit_id }  Remove the commit and keep changes in working are
 git reset --hard commit_id --- Remove the commit and permanently discard changes
 
 ------------------------------------------------------
+Demo - Configure Github access on you laptop 
+1.   Create GitHub API token
+a.   Right Top corner → Click on our name → Settings → Developer Settings → Personal Access tokens → Tokens (classic) → give a name → select repo and create it.
+2.   We need to configure this token in git bash, it prompts for password when you push.
 
+------------------------------------------------------
 
 
 
