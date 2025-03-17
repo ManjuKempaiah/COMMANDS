@@ -146,7 +146,16 @@ a.   Right Top corner → Click on our name → Settings → Developer Settings 
 2.   We need to configure this token in git bash, it prompts for password when you push.
 
 ------------------------------------------------------
+3.   WebHook
+ 
+ Go to github repository → Settings → Webhook → Add Webhook
+ URL –> http://<jenkins-public-ip>:8080/github-webhook/
 
+ Content type: applicattion/json
+ 
+ Note: it should be private ip in real time
+
+------------------------------------------------------
 
 
 
