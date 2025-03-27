@@ -1,3 +1,43 @@
+PuTTY Key Generator --> Load your pem file --> Save Private Key with.ppk 
+--> Download putty private key.
+
+Click on PuTTY 
+Session:
+Host Name or IP Adress:ec2-instance Public IP
+Port: 22
+Connection type: SSH
+Then Connection --> SSH --> Auth --> Credentials --> Private key file for Authentication Browse
+Select the Key --> open --> Login as: ec2-user
+
+---------------------------------------------------------------------------
+
+MobaXterm 
+
+Click on Session --> SSH --> Remote host: Public IP --> Specify username: ec2-user --> port: 22
+
+Advanced SSH settings --> Clock on use Private key --> Slect file --> open --> Click on OK
+
+-----------------------------------------------------------------------------
+
+echo "Manju Kempaiah" > manju.txt
+
+-----------------------------------------------------------------------------
+
+AWS DataSync
+Simply data migration to cloud
+
+AWS Storage Gateway
+It allows on-premise applications to seamlessly access S3
+
+Trusted Advisor
+a.  Cost Optimization
+b.  Security
+c.  Service Limits
+d.  Performance
+e.  Fault tolerance
+
+-----------------------------------------------------------------------------
+
 lsblk
 sudo mkfs.ext4 /dev/nvme1n1
 sudo mkdir /myvol
@@ -8,12 +48,19 @@ UUID=05e29c34-475e-4293-9ba2-8c28d57c037d /myvol ext4 defaults,nofail 0 2
 sudo resize2fs /dev/nvme1n1
 df -h
 du -sh
+
 ssh -i ~/Downloads/loke.pem ec2-user@16.171.225.190
+ssh -i /path/to/private_key.pem username@remote_host
+~ - is the shortcut for user home
+
 sudo vi nat.pem
-sudo chown 400 nat.pem
+sudo chmod 400 nat.pem
 sudo ssh -i nat.pem ec2-user@10.0.0.146
 ping google.com
 ping facebook.com
+
+chmod 400 ~/Downloads/loke.pem
+
 
 sudo yum install httpd -y
 sudo systemctl start httpd
@@ -36,6 +83,11 @@ cat /var/www/html/apptwo/index.html
 /apptwo/index.html
 path
 /apptwo*
+
+cp target/chatram.war /opt/wars
+sudo mkdir wars
+sudo chown -R jenkins:jenkins /opt/wars
+ls -ltr /opt/
 
 aws configure
 aws sts get-caller-identity
@@ -62,14 +114,35 @@ echo "<h2 style="color:red"> USER DATA </h2>" > /var/www/html/index.html
 
 aws ecr create-repository --repository-name my-repo  Amazon Elastic Container Service
 
-sudo vi deployment.yml
-esc Shit+: wq
-10 dd to delete lines in the file
-cat deployment.yml To show content in the file
+--------------------------------------------------------------------------------------
+
+ssh -i ~/Downloads/loke.pem ec2-user@16.171.225.190
+ssh -i /path/to/private_key.pem username@remote_host
+
+sudo mkfs.ext4 /dev/nvme1n1
+sudo resize2fs /dev/nvme1n1
+
+sudo yum install jenkins -y
+sudo systemctl start jenkins
+sudo systemctl enable jenkins
+sudo systemctl status jenkins
+sudo systemctl restart jenkins
+sudo yum remove jenkins -y
+sudo yum update jenkins
+
+sudo yum list | grep java-17
+sudo yum install -y java-17-amazon-corretto.x86_64
+sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.82/bin/apache-tomcat-9.0.82.tar.gz
+sudo tar xf apache-tomcat-9.0.82.tar.gz
+sudo rm -f apache-tomcat-9.0.82.tar.gz
+sudo chown -R ec2-user:ec2-user tomcat9/
+
+usermod -a -G docker ec2-user
+usermod -a -G docker jenkins
 
 ------------------------------------------------------------
 10.0.0.0/24
-10.0.0.0/25    Subnet1(Public Subnet) 128ips
+10.0.0.1/25    Subnet1(Public Subnet) 128ips
 10.0.0.128/25  Subnet2(Private Subnet) 128 ips Nat Instance and Nategateway
 
 10.0.0.0/24   Create one Vpc one Public Subnet
@@ -79,6 +152,638 @@ cat deployment.yml To show content in the file
 10.10.0.0/24  Private Subnet
 
 --------------------------------------------------------------------
+
+1.EC2-user Demo
+
+Launch an ec2 instance
+
+ssh -i /path/to/private_key.pem username@remote_host
+
+sudo yum install httpd -y
+sudo systemctl start httpd
+sudo systemctl enable httpd
+sudo systemctl status httpd
+
+sudo vi /var/www/html/index.html
+<h2 style="color:blue"> BLUE DEPLOYMENT </h2>
+cat /var/www/html/index.html
+
+Public_ip:80
+In Security Group Provide HTTP Permission From anywhere Port 80
+
+----------------------------------------------------------------------
+
+2.Demo Create Custom AMIs
+1.	Launch EC2 using existing AMI.
+2.	On this instance install the tools and softwares that should be present in every EC2.
+a.	For example install git
+b.	sudo yum install git -y
+3.	Take image (template) ---> Click on Instance --> Actions --> Image and Templates --> Create Image
+4.	Delete the instance launched in step 1.
+5.	Goto AMIs → Select AMI → Click on Launch Instance from AMI
+6.	SSH on to EC2
+7.	 Check git is there or not git --version
+
+To Share AMI To Different Account --> Click on AMI --> Actions --> Add Account ID --> Save chnages
+To See this ami in shared account In AMI section Private Images we can see
+
+AMIS can be copied to regions --> Click on AMI --> Actions --> Copy AMI --> Destination Region --> Copy AMI
+
+----------------------------------------------------------------------
+
+3.Attaching Ebs Volume to ec2-instance
+
+1.	Make sure you have existing EC2 instance (or create one)
+2.	Create new volume (Make sure volume and ec2 are in same AZ)
+3.	Attach EBS volume to EC2 instance
+4.	SSH into EC2 instance
+a.	List available disks 
+i.	lsblk (this show available disks)
+5.	Create filesystem on the disk
+a.	sudo mkfs.ext4 /dev/xvdf (do this for new volumes not for volumes created from snapshots)
+6.	Create a mount point
+a.	sudo mkdir /myvol
+7.	Mount the disk into above folder
+a.	sudo mount /dev/xvdf /myvol/
+8.	Check if disk is mounted
+a.	lsblk
+9.	Update /etc/fstab file such that volume gets automounted when ec2 is rebooted. 
+
+UUID=64ba8473-851e-4846-94f1-86b7dd968fde /myvol ext4 defaults,nofail 0 2
+
+sudo resize2fs /dev/xvdf
+sudo growpart /dev/xvdf 1
+
+----------------------------------------------------------------------
+
+4.Amazon Data Lifecycle Manager
+
+ Attch tags for both Ebs volumes ebs-demo and ebs-demo 6pm
+
+ Backup = yes
+
+ Click on create Lifecycle Ploicy --> Custom Ploicy --> EBS Snapshot policy --> Next
+ tag resource types --> Volume Traget resource tags --> key Backup , value yes Add
+
+----------------------------------------------------------------------
+
+5.Crete VPC with one Public Subnet and To make Subnt Public Configure Internet Gateway In Route table
+
+1.Create VPC with Cidr "10.0.0.0/24"
+2.Create Public Subnet With Cidr "10.0.0.0/24"
+3.Create One Public Route table
+4.Click on Route table,Select Public Route Table and Click on Subnet associtions and Select Public-Subnet and 
+  save associations.
+5.Create InternetGateway and attch with VPC
+6.Click on Route Tables,Select Public Route table,Click on routes, target-internetgateway, Destination:0.0.0.0/0
+  and then save
+----------------------------------------------------------------------
+
+6.Create VPC with one Public Subnet and Private Subnet
+
+1.Create VPC with Cidr "10.0.0.0/24"
+2.Create Public Subnet With Cidr "10.0.0.1/25"
+3.Create One Public Route table
+4.Click on Route table,Select Public Route Table and Click on Subnet associtions and Select Public-Subnet and 
+  save associations.
+5.Create InternetGateway and attch with VPC
+6.Click on Route Tables,Select Public Route table,Click on routes, target-internetgateway, Destination:0.0.0.0/0
+  and then save
+
+  Private Subnet
+1.Create Private Subnet With Cidr "10.0.0.128/25" 
+2.Create One Private Route table
+4.Click on Route table,Select Private Route Table and Click on Subnet associtions and Select Private-Subnet and 
+  save associations.
+
+----------------------------------------------------------------------
+
+7.To provide Internet connection to the Private Subnet
+
+In which subnet do you configure NAT?
+It should be on a public subnet.
+
+First Creete One VPC with Public Subnet and Private Subnet
+
+Demo - Configure NAT Instance
+1.	Create NAT instance in public subnet with public IP (choose nat AMI)
+    Choose manju-vpc
+    Subnet Should be Public
+    Auto-assign public IP Enable
+2.	Configure private route table with NAT
+3.	Stop source destination check for NAT instance
+
+Testing NAT configuration
+1.	Launch EC2 instance in private subnet
+    Choose manju-vpc
+    Subnet Should be Private
+    Auto-assign public IP Disable
+2.	SSH to NAT and then SSH to private
+    sudo vi nat.pem
+    sudo chmod 400 nat.pem
+    sudo ssh -i nat.pem ec2-user@Private_ip
+3.	ping google.com (you should get reply)
+
+-------------------------------------------------------------------------
+
+8.To provide Internet connection to the Private Subnet using NatGateway
+
+  Keep the above setup as it as
+
+  Create Nategateway
+  create nategateway in public subnet
+
+  Go to route tables, Click on private-route--> Routes --> Edit Routes --> Remove Nat-instance
+  Add route --> In Target select NatGateway, Destination:0.0.0.0/0
+
+  2.	SSH to NAT and then SSH to private
+    sudo vi nat.pem
+    sudo chmod 400 nat.pem
+    sudo ssh -i nat.pem ec2-user@Private_ip
+3.	ping google.com (you should get reply)
+    facebook.com
+-------------------------------------------------------------------------
+9.VPC Peering Demo
+
+1.  Create VPC-1
+a.  Choose CIDR blocks as follows
+i.  10.20.0.0/24
+b.  Create Subnet-one
+i.  10.20.0.0/24
+
+2.  Create VPC-2
+a.  10.21.0.0/24
+b.  Create Subnet-two
+i.  10.21.0.0/24
+
+3.  Create VPC peering connection
+4.  Approve peering connection
+5.  Configure peering connections in route tables
+a.  For VPC-1 destination should be CIDR of VPC2 and viceversa 
+
+   To peering two vpcs
+1. Create one instance with vpc-1 with public subnet and Auto-assign public IP Enable
+2. Create one instance with vpc-2 with private subnet and Auto-assign public IP Disable
+
+SSH into vpc one
+ping vpc two privateip
+
+-------------------------------------------------------------------------
+
+10.Transit Gateway Demo
+
+1.  Create gateway
+2.  Create transit gateway attachment for VPC1
+3.  Create transit gateway attachment for VPC2
+4.  Configure transit gateway in route tables of both VPCs.
+
+   To peering two vpcs
+1. Create one instance with vpc-1 with public subnet and Auto-assign public IP Enable
+2. Create one instance with vpc-2 with private subnet and Auto-assign public IP Disable
+
+SSH into vpc one
+ping vpc two privateip
+
+-------------------------------------------------------------------------
+11.Load Balancer Demo
+
+Setting us target Group
+
+1.  Create EC2 instance and install a sample application on it
+2.  Create target group and add above instance into target group
+
+Create ALB
+Follow recordings to setup ALB
+
+
+1.  Crate EC2 for appone and run sample application
+a.  Create target group with name appone
+    sudo vi /var/www/html/index.html
+    <h2 style="color:blue"> BLUE DEPLOYMENT </h2>
+    cat /var/www/html/index.html
+
+2.  Crate EC2 for apptwo and run sample application
+    sudo mkdir /var/www/html/apptwo
+    sudo vi /var/www/html/apptwo/index.html
+    cat /var/www/html/apptwo/index.html
+    <h2 style="color:green"> GREEN DEPLOYMENT </h2>
+a.  Create target group with name apptwo
+b.  Maintain a path apptwo
+    /index.html
+
+
+3.  Create ALB
+a.  Add 80 as a lister
+b.  Default rule is to forward request to appone
+c.  Add a rule to forward request to apptwo if paths contains “apptwo”
+    /apptwo/index.html
+    path
+    /apptwo*
+-------------------------------------------------------------------------
+12.Blue Green Deployment
+
+1.  Create EC2 deploy sample application which should print this is blue in the browser
+2.  Create a second ec2 instance and deploy a web application, this should print green in the browser.
+3.  Initial blue should have 100% traffic
+4.  Shift traffic to green and test is 
+
+To shift traffic to Green Deployment:
+Click on Load Balancer --> Listeners and rules --> Manage Listener --> Edit listener
+Add taget group apptwo --> Shift 100% traffic from Blue to Green
+-------------------------------------------------------------------------
+13.Demo - Setup autoscaling
+
+1.  Create AMI with your application.
+2.  Make Sure you have ALB and target group (empty target group)
+3.  Setup ALB and make sure it forwards requests to above target group
+4.  Create Launch template
+
+To change the Instance type in Launch Template --> Modify template(Create new Version)
+Change Instance type --> Create Modify Version.
+In Launch Template --> Vesrions --> Click on Latest Version --> Actions --> Set Default Version
+
+After Do Instance refresh in Autoscaling group
+
+For AMI also same Change the AMI.
+
+-------------------------------------------------------------------------
+14.Security Group and NACL
+
+SSH -- Only Internal Team
+Application- Everyone should access (Any Where)
+ping ALL ICMP-IPv4 
+Oracle-RDS 1521 custom 172.21.9.100/32 (ends with /32)
+
+NACL By deault allows all traffic
+
+-------------------------------------------------------------------------
+15.Userdata Demo
+
+Userdata scripts run only ones that are at launch time, reboot will not run userdata scripts.
+Note: If required you can configure userdata to run again.
+
+Install apache server using userdata scripts
+Launch EC2 and put the following script in userdata field
+
+#!/bin/bash 
+yum install httpd -y 
+echo "<h2> Java Home Cloud - UserData Demo </h2>" > /var/www/html/index.html 
+systemctl enable httpd 
+systemctl start httpd
+
+N: If userdata scripts fail, to troubleshoot we need to check logs
+/var/log/cloud-init-output.log
+/var/log/cloud-init.log
+
+-------------------------------------------------------------------------
+16.Demo - EFS
+
+1.  Launch EFS
+2.  Launch two ec2 instance one in each AZ
+    one in Availablity zone 1-a and another one in 1-b
+    0 x File systems Click on Edit --> EFS --> Add shared file system --> Mount point /mnt/efs/fs1
+    cd /mnt/efs/fs1
+    sudo vi manju.txt
+3.  Mount EFS onto two instance
+
+EFS -- For Linux Operating System 
+FSx -- Windows Operating System 
+
+EFS Storage Classes 
+1.Standard
+2.Onezone
+
+-------------------------------------------------------------------------
+17.RDS(Relational Database Service)
+   
+   Managed database for storing relational data with automated backups and high availability
+
+   Datbases --> Create database --> Standard create --> Engine options --> MySQL
+
+   Snapshots -->Manual,System 
+   System snapshots cannot be shared with other AWS Accounts,We can copy to another region
+   Manual snapshots can be shared with other AWS Accounts, We can copy to another region
+
+   Event Subscriptions:
+
+   We can configure notification for specific events on RDS
+
+   Specific event categories: failover,low storage
+
+   To Delete database disable Delettion Termination and type delete me
+
+-------------------------------------------------------------------------
+18.DynamoDB
+
+It is highly durable, scalable NO SQL database in the cloud
+
+Click on create table --> Table name --> Institute --> Partition key --> pk --> Sort key --> sk
+Create table.
+
+Explore Items --> Select Institute --> Create Item
+
+pk --> Instructors
+sk --> Instructors#1
+
+pk --> Courses
+sk --> Courses#1
+
+query
+
+-------------------------------------------------------------------------
+19.CloudWatch
+
+Monitoring EC2
+1.  To monitor EC2 instances using cloudwatch you don’t have to install an agent.
+2.  Got to CloudWatch dashboard
+a.  Metrics
+b.  EC2
+c.  Select Per Instance Metric
+    in the search box paste the instance_id
+d.  Select the metric you wanna monitor(Cpu Utilization)
+
+Configure Alarms If CPU is high
+Alarms → Create Alarm → Select Metrics → EC2 → Per Instance Metric → CPUUtilization → greater than 80 → select SNS topic and create alarm.
+
+Billing Alarms
+● It helps in tracking bills and avoids surprising bills
+● Billing alarms available only in N Virginia
+● We have to enable billing alerts in billing dashboard
+
+Under Billing and Cost Management --> Billing Preferences --> Alert preferences --> Edit
+
+Click on box Receive CloudWatch billing alerts --> Clock on Update
+
+-------------------------------------------------------------------------
+20.CloudTrail
+
+ CloudTrail Track User Activity and API Usage.
+
+ Event history
+ Trails --> Create trail
+
+CloudTrail Event Types
+1.Insights Events
+2.Data Events
+3.Management Events
+
+-------------------------------------------------------------------------
+21.IAM(Identity and Access Management)
+
+1.Create IAM user and grant AWS console access only to EC2:
+
+2.Configure CLI and set programmatic access:
+
+1.  Install AWS CLI on your laptop
+a.  https://aws.amazon.com/cli/
+2.  Check the installation
+a.  aws --version
+3.  CLI should access AWS account
+a.  Create Access Keys & Secret Keys
+b.  Got to the user and create access and secret keys
+4.  Open terminal and run the following command to configure access keys and secret keys
+a.  aws configure (enter access keys, secret keys and default region)
+5.  Important files to remember
+a.  ~/.aws/credentials (contains access keys and secret keys)
+b.  ~/.aws/config (contains region configuration)
+6.  We can configure multiple profiles to work with multiple accounts
+a.  aws configure --profile=dev
+
+aws configure
+aws sts get-caller-identity
+
+Using CLI perform certain operations 
+CLI has more operations than AWS console
+
+aws ec2 start-instances --instance-ids i-0997df15b5f538d3e i-06ea3eba9bcb3731e
+aws ec2 stop-instances --instance-ids i-0997df15b5f538d3e i-06ea3eba9bcb3731e
+aws ec2 reboot-instances --instance-ids i-0013a45a52466776d
+aws ec2 terminate-instances --instance-ids i-0013a45a52466776d
+
+3.IAM Role Demo:
+
+1.  Launch EC2 instance
+2.  SSH into ec2 and run aws s3 ls command
+3.  The above command throws error stating no credentials found
+4.  To fix this problem create an IAM role with administrator access and attach to EC2.
+5.  Same IAM role can be attached to multiple EC2 instances.
+
+Click on Instance --> Actions --> Security --> Modify IAM Role --> Choose IAM Role --> Update IAM Role
+
+
+Trusted Entity: Which service going to use the IAM Role 
+
+AWS service
+AWS account
+Web identity
+SAML 2.0 federation
+Custom trust policy
+
+4.Root Account & IAM User:
+
+Never use a root account for day to day activities, create admin IAM users and manage your work.
+Root account is logged in with email id and password.
+IAM user is the user created in IAM dashboard
+
+Create user with Administrator Access
+
+5.MFA (Multi Factor Authentication):
+
+MFA provides a second layer of security on top of username and password.
+
+6.IAM POlicy
+
+A policy is an object in AWS that defines permissions.
+
+AWS managed Policy 
+Custom policy
+
+Write IAM policy which allows start, stop and describe on all ec2 instances
+
+- Create IAM User for testing above policy
+- Create IAM policy
+- Attach IAM policy to IAM User
+
+Update above policy to allow only on specific EC2 instances
+
+Updating above policy to allow permissions on dev servers
+
+Condition key : aws:Resource Tag
+Tag key*      : Env
+Qualifier     : Default
+Operator      : StringEquals
+Value         : Dev
+
+Other conditions available
+SourceIp
+Only if MFA activated
+
+{
+  "Statement":[{
+    "Effect":"effect",  Allow,Deny
+    "Action":"action",  start,stop,describe
+    "Resource":"arn",   ec2
+    "Condition":{
+      "condition":{
+    "key":"value"
+    }
+      }
+    }
+  ]
+}
+
+7.Cross Account Access:
+
+Cross account access allows users in one account to perform operations in other account.
+
+Users in Hari’s account wants to access resources in Manjunatha account
+- Manjunath should create IAM Role for cross account access
+- Cross account is not supported for root users.
+
+Login one of the iam users from hari accound and login to manjunaths account using copy switch roles in console link
+
+What is inline policy?
+An inline policy is a policy created for a single IAM identity (a user, group, or role).
+
+-------------------------------------------------------------------------
+22.S3(Simple Storage Service)
+
+1.Demo - Create Bucket & Store objects,Copy,Move,Delete,Create Folder and Delete objects
+
+2.AWS CLI S3 Operations
+
+aws s3 ls (to list buckets)
+aws s3 cp source/file s3://bucketname
+aws s3 ls s3://bucketname
+
+3.AWS s3 Versioning
+
+4.S3 Server Access Logging
+
+5.Hosting Static Website
+  
+  Applications developed using ReactJs, AngularJs, HTML, Javascript, CSS are static.
+  The best place to host static website in AWS web services is S3
+
+Steps to host static website on S3
+
+1.  Upload code into S3.
+2.  Enable static website hosting on S3 (In Properties)
+3.  Change S3 permissions and provide public read to objects
+a.  Uncheck block all public access (In permissions)
+b.  Add following bucket policy (In permissions)
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "PublicReadGetObject",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::jhcoct223/*"
+            ]
+        }
+    ]
+}
+
+6.Object Lock
+
+  You need to enable object lock feature at the time of creating bucket.
+  while object lock enabled by default versioning is enabled.
+
+  There are two type in object lock
+
+  1.Governance Mode
+  2.Compliance Mode
+
+7.S3 Lifecycle Rules
+
+ Management --> Lifecycle configuaration
+
+8.S3 Replications
+
+There are two types of Replications
+1.Same region repications
+2.Cross region replications
+
+8.Event Notifications
+
+1.  Go to the SNS topic
+2.  Choose the standard topic, give the name and Display name; leave all other values as default and click on the create topic.
+3.  Click on the create subscription.
+a.  Choose the Protocol and endpoint.
+4.  Create the subscription.
+a.  Subscribe to the topic, by opening the email.
+5.  Create the one bucket → Properties → event notifications → Create event notifications → Event name → All object create events → Destinations → Choose the SNS topic
+
+
+
+{
+            "Sid": "Example SNS topic policy",
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "s3.amazonaws.com"
+            },
+            "Action": [
+                "SNS:Publish"
+            ],
+            "Resource": "arn:aws:sns:eu-north-1:381491900447:event-notification",
+            "Condition": {
+                "ArnLike": {
+                    "aws:SourceArn": "arn:aws:s3:*:*:manju-31-bucket"
+                }
+            }
+        }
+
+
+
+-------------------------------------------------------------------------
+
+23.VPC Endpoints Demo
+
+VPC endpoints enable private connections between your Amazon VPC and supported AWS services without using the public internet, enhancing security and reducing latency.
+
+1.interface endpoints
+2.gateway endpoints
+
+1.  Create VPC with one public and one private subnet.
+    10.0.0.0/24    (VPC cidr)
+    10.0.0.1/25    (Public Subnet Cidr )
+    10.0.0.128/25  (Private Subnet Cidr)
+
+a.  Launch EC2 in a public subnet with public ip.
+b.  ssh into ec2-instance
+c.  Create Iam Role to access s3(s3 full access) and attach to instance
+    aws s3 ls
+    aws s3 ls s3://bucketname
+
+
+3.  Launch EC2 in a private subnet with private ip.
+
+a.  ssh to first instance and from ssh into second instance
+    aws s3 ls (there is no internet in the private subnet)
+
+4.  Create VPC endpoint
+
+a.  VPC → Endpoints → Create → go with default options → Search for s3 → Services Type=Gateway → Select VPC → Select Route tables and create.
+
+5.  Go to private instance and test by running following commands
+a.  aws s3 ls
+    aws s3 cp source/file/path s3://bucket_name
+    asw s3 ls s3://bucket_name
+-------------------------------------------------------------------------
+
+
+
+
+
+
+
+
 
 
 
