@@ -38,6 +38,15 @@ e.  Fault tolerance
 
 -----------------------------------------------------------------------------
 
+sudo su       --- switch to the root
+su - ec2-user --- switch to the ec2-user 
+cd            --- change directory
+cd ~          --- navigate to the home directory of the current user
+ll            --- List Files with Detailed Information
+ls -l         --- lists files and directories in long format
+
+-----------------------------------------------------------------------------
+
 lsblk
 sudo mkfs.ext4 /dev/nvme1n1
 sudo mkdir /myvol
